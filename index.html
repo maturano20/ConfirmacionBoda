@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Confirmación de Asistencia - María & José</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Georgia", serif;
+            background-color: #ffffff;
+            color: #4a4a4a;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        header img {
+            width: 220px;
+            height: auto;
+        }
+
+        h1 {
+            color: #8a1c1c;
+            font-size: 2.5rem;
+            margin: 10px 0 5px;
+            letter-spacing: 2px;
+        }
+
+        h2 {
+            color: #6bb8a8;
+            font-weight: normal;
+            margin: 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-top: 40px;
+            color: #8a1c1c;
+            font-size: 1.8rem;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid #d6c89b;
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #8a1c1c;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #d6c89b;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 25px;
+            border: none;
+            background: #6bb8a8;
+            color: white;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #569688;
+        }
+
+        .acompanantes {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px dashed #d6c89b;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .acompanante-block {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 350px;
+            border: none;
+            border-radius: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 10px;
+            margin-top: 40px;
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        #countdown {
+            text-align: center;
+            font-size: 2rem;
+            color: #6bb8a8;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+
+    <script>
+        // Mostrar acompañantes
+        function mostrarAcompanantes() {
+            let num = document.getElementById("numPersonas").value;
+            let contenedor = document.getElementById("acompanantesContainer");
+
+            contenedor.style.display = num > 0 ? "block" : "none";
+
+            for (let i = 1; i <= 10; i++) {
+                let bloque = document.getElementById("acompanante" + i);
+                bloque.style.display = i <= num ? "block" : "none";
+            }
+        }
+
+        // Cuenta atrás
+        function iniciarCuentaAtras() {
+            const boda = new Date("2026-10-10T00:00:00").getTime();
+
+            setInterval(() => {
+                const ahora = new Date().getTime();
+                const diff = boda - ahora;
+
+                if (diff <= 0) {
+                    document.getElementById("countdown").innerHTML = "¡Hoy es el gran día!";
+                    return;
+                }
+
+                const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const horas = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seg = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById("countdown").innerHTML =
+                    `${dias} días, ${horas}h ${mins}m ${seg}s`;
+            }, 1000);
+        }
+    </script>
+</head>
+
+<body onload="iniciarCuentaAtras()">
+
+    <!-- ENCABEZADO -->
+    <header>
+        <img src="https://drive.google.com/thumbnail?id=1IedT1_lC1lq1fcNnsTEX6yb8Olzv9S8z&sz=w1000"
+     alt="Logo Boda"
+     style="width:220px; height:auto;">
+
+    <!-- CUENTA ATRÁS -->
+    <h2 class="section-title">⏳ Cuenta atrás</h2>
+    <div id="countdown">Cargando...</div>
+
+    <!-- MAPA -->
+    <h2 class="section-title">📍 Ubicación del evento</h2>
+    <div class="container map-container">
+        <!-- Puedes cambiar el mapa si me dices el lugar exacto -->
+        <iframe 
+            src="https://maps.google.com/maps?q=41.23468456781529,1.1512332778628556&hl=es&z=16&output=embed"
+            allowfullscreen=""
+            loading="lazy">
+        </iframe>
+    </div>
+
+    <!-- INFORMACIÓN ALOJAMIENTO -->
+    <h2 class="section-title">🏨 Información del alojamiento</h2>
+    <div class="container">
+        <p style="font-size:1.1rem;">
+            Hemos reservado habitaciones para los invitados que lo necesiten.
+        </p>
+        <ul style="font-size:1.1rem; line-height:1.6;">
+            <li>Hotel recomendado: <b>Hotel Avenida y Hotel Morell</b></li>
+            <li>Precio especial para invitados</li>
+        </ul>
+        <p>Al confirmar tu asistencia podrás indicar si necesitas alojamiento.</p>
+    </div>
+
+    <!-- FORMULARIO -->
+    <h2 class="section-title">💌 Confirmación de asistencia</h2>
+    <div class="container">
+        <form action="https://script.google.com/macros/s/AKfycbz50m4sr81K0HSUzYhZZhvXcHncN3WSJmPDh2EQXYeOH5fM1rM8k23o8kQ2krBJnzefYA/exec" method="POST">
+
+            <label>Tu nombre</label>
+            <input type="text" name="nombre" required />
+
+            <label>Tus alergias o intolerancias</label>
+            <textarea name="alergias_principal" placeholder="Opcional"></textarea>
+
+            <label>¿Cuántos acompañantes traes?</label>
+            <select name="numPersonas" id="numPersonas" onchange="mostrarAcompanantes()">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+
+            <label>¿Necesitas alojamiento?</label>
+            <select name="necesitaAlojamiento" onchange="document.getElementById('habitaciones').style.display = this.value === 'Sí' ? 'block' : 'none';">
+                <option>No</option>
+                <option>Sí</option>
+            </select>
+
+            <div id="habitaciones" style="display:none;">
+                <label>Nº de habitaciones</label>
+                <input type="number" name="numHabitaciones" min="1" />
+            </div>
+
+            <div id="acompanantesContainer" class="acompanantes">
+                <h3 style="color:#6bb8a8;">Acompañantes</h3>
+                <script>
+                    for(let i = 1; i <= 10; i++){
+                        document.write(`
+                        <div id="acompanante${i}" class="acompanante-block" style="display:none;">
+                            <label>Acompañante ${i} - Nombre</label>
+                            <input type="text" name="nombre_${i}" />
+
+                            <label>Alergias o intolerancias</label>
+                            <textarea name="alergias_${i}"></textarea>
+                        </div>
+                        `);
+                    }
+                </script>
+            </div>
+
+            <button type="submit">Enviar confirmación</button>
+        </form>
+    </div>
+
+    <footer>
+        Gracias por confirmar. ¡Estamos deseando compartir este día con vosotros!
+    </footer>
+
+</body>
+</html>
