@@ -30,14 +30,63 @@
         bloque.style.display = i <= num ? "block" : "none";
       }
     }
+    // Cuenta atrás
+        function iniciarCuentaAtras() {
+            const boda = new Date("2026-10-10T00:00:00").getTime();
+
+            setInterval(() => {
+                const ahora = new Date().getTime();
+                const diff = boda - ahora;
+
+                if (diff <= 0) {
+                    document.getElementById("countdown").innerHTML = "¡Hoy es el gran día!";
+                    return;
+                }
+
+                const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const horas = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seg = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById("countdown").innerHTML =
+                    `${dias} días, ${horas}h ${mins}m ${seg}s`;
+            }, 1000);
+        }
   </script>
 </head>
-<body>
+<body onload="iniciarCuentaAtras()">
 
 <header>
   <img src="https://drive.google.com/thumbnail?id=1IedT1_lC1lq1fcNnsTEX6yb8Olzv9S8z&sz=w1000" alt="Logo Boda">
 </header>
 
+    <!-- CUENTA ATRÁS -->
+    <h2 class="section-title">⏳ Cuenta atrás</h2>
+    <div id="countdown">Cargando...</div>
+
+    <!-- MAPA -->
+    <h2 class="section-title">📍 Ubicación del evento</h2>
+    <div class="container map-container">
+        <!-- Puedes cambiar el mapa si me dices el lugar exacto -->
+        <iframe 
+            src="https://maps.google.com/maps?q=41.23468456781529,1.1512332778628556&hl=es&z=16&output=embed"
+            allowfullscreen=""
+            loading="lazy">
+        </iframe>
+    </div>
+
+    <!-- INFORMACIÓN ALOJAMIENTO -->
+    <h2 class="section-title">🏨 Información del alojamiento</h2>
+    <div class="container">
+        <p style="font-size:1.1rem;">
+            Hemos reservado habitaciones para los invitados que lo necesiten.
+        </p>
+        <ul style="font-size:1.1rem; line-height:1.6;">
+            <li>Hotel recomendado: <b>Hotel Avenida y Hotel Morell</b></li>
+            <li>Precio especial para invitados</li>
+        </ul>
+        <p>Al confirmar tu asistencia podrás indicar si necesitas alojamiento.</p>
+    </div>
 <h2 class="section-title">💌 Confirmación de asistencia</h2>
 
 <div class="container">
@@ -121,3 +170,4 @@ document.getElementById("form").addEventListener("submit", async function(e) {
 
 </body>
 </html>
+
