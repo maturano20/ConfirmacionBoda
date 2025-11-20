@@ -185,38 +185,34 @@
         </form>
     </div>
 
-   <script>
-document.getElementById("form").addEventListener("submit", async function(e) {
-    e.preventDefault();
+    <script>
+        // --- Envío seguro sin errores JSON ---
+        document.getElementById("form").addEventListener("submit", async function(e) {
+            e.preventDefault();
 
-    const form = e.target;
-    const data = new FormData(form);
+            const form = e.target;
+            const data = new FormData(form);
 
-    try {
-        const response = await fetch(
-            "https://script.google.com/macros/s/AKfycbwS4WVPJhhWmiNfhYDFjtBy0wauhqpZw-aLmU-qSAbz-XRvCwJ9CQPQHw8oGx0wRZI8nQ/exec",
-            {
-                method: "POST",
-                body: data
+            try {
+                const response = await fetch(
+                    "https://script.google.com/macros/s/AKfycbwS4WVPJhhWmiNfhYDFjtBy0wauhqpZw-aLmU-qSAbz-XRvCwJ9CQPQHw8oGx0wRZI8nQ/exec",
+                    {
+                        method: "POST",
+                        body: data
+                    }
+                );
+
+                if (response.ok) {
+                    window.location.href = "gracias.html";
+                } else {
+                    alert("Hubo un error al enviar el formulario. Intenta nuevamente.");
+                }
+            } catch (error) {
+                alert("No se pudo conectar con el servidor. Revisa tu conexión.");
+                console.error(error);
             }
-        );
-
-        const result = await response.json();
-
-        if (response.ok && result.status === "OK") {
-            window.location.href = "gracias.html";
-        } else {
-            alert("Hubo un error al enviar el formulario. Intenta nuevamente.");
-            console.error(result);
-        }
-    } catch (error) {
-        alert("No se pudo conectar con el servidor. Revisa tu conexión.");
-        console.error(error);
-    }
-});
-</script>
-
+        });
+    </script>
 
 </body>
 </html>
-
