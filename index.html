@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Confirmación de Asistencia - María & José</title>
+
+  <style>
+    body { margin:0; font-family:"Georgia", serif; background-color:#fff; color:#4a4a4a; }
+    header { text-align:center; padding:30px 20px; }
+    header img { width:220px; height:auto; }
+    h2.section-title { text-align:center; margin-top:40px; color:#8a1c1c; font-size:1.8rem; }
+    .container { max-width:700px; margin:auto; background:#fff; padding:25px; border-radius:12px; border:2px solid #d6c89b; box-shadow:0 0 20px rgba(0,0,0,0.05); }
+    label { display:block; margin-top:15px; font-weight:bold; color:#8a1c1c; }
+    input, select, textarea { width:100%; padding:10px; margin-top:5px; border:1px solid #d6c89b; border-radius:6px; font-size:1rem; }
+    textarea { resize:vertical; }
+    button { width:100%; padding:12px; margin-top:25px; border:none; background:#6bb8a8; color:white; font-size:1.2rem; border-radius:8px; cursor:pointer; transition:0.3s; }
+    button:hover { background:#569688; }
+    .acompanantes { margin-top:20px; padding:15px; border:1px dashed #d6c89b; border-radius:8px; display:none; }
+    .acompanante-block { margin-bottom:20px; padding-bottom:15px; border-bottom:1px solid #eee; }
+  </style>
+
+  <script>
+    function mostrarAcompanantes() {
+      let num = document.getElementById("numPersonas").value;
+      let contenedor = document.getElementById("acompanantesContainer");
+      contenedor.style.display = num > 0 ? "block" : "none";
+      for (let i = 1; i <= 10; i++) {
+        let bloque = document.getElementById("acompanante" + i);
+        bloque.style.display = i <= num ? "block" : "none";
+      }
+    }
+  </script>
+</head>
+<body>
+
+<header>
+  <img src="https://drive.google.com/thumbnail?id=1IedT1_lC1lq1fcNnsTEX6yb8Olzv9S8z&sz=w1000" alt="Logo Boda">
+</header>
+
+<h2 class="section-title">💌 Confirmación de asistencia</h2>
+
+<div class="container">
+  <form id="form">
+    <label>Tu nombre</label>
+    <input type="text" name="nombre" required />
+
+    <label>Tus alergias o intolerancias</label>
+    <textarea name="alergias_principal" placeholder="Opcional"></textarea>
+
+    <label>¿Cuántos acompañantes traes?</label>
+    <select name="numPersonas" id="numPersonas" onchange="mostrarAcompanantes()">
+      <option value="0">0</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+    </select>
+
+    <label>¿Necesitas alojamiento?</label>
+    <select name="necesitaAlojamiento" onchange="document.getElementById('habitaciones').style.display = this.value === 'Sí' ? 'block' : 'none';">
+      <option>No</option>
+      <option>Sí</option>
+    </select>
+
+    <div id="habitaciones" style="display:none;">
+      <label>Nº de habitaciones</label>
+      <input type="number" name="numHabitaciones" min="1" />
+    </div>
+
+    <div id="acompanantesContainer" class="acompanantes">
+      <h3 style="color:#6bb8a8;">Acompañantes</h3>
+      <script>
+        for (let i=1; i<=10; i++) {
+          document.write(`
+            <div id="acompanante${i}" class="acompanante-block" style="display:none;">
+              <label>Acompañante ${i} - Nombre</label>
+              <input type="text" name="nombre_${i}" />
+              <label>Alergias o intolerancias</label>
+              <textarea name="alergias_${i}"></textarea>
+            </div>
+          `);
+        }
+      </script>
+    </div>
+
+    <button type="submit">Enviar confirmación</button>
+  </form>
+</div>
+
+<script>
+document.getElementById("form").addEventListener("submit", async function(e) {
+  e.preventDefault();
+  const form = e.target;
+  const data = new FormData(form);
+
+  try {
+    const response = await fetch(
+      "https://script.google.com/macros/s/AKfycby-pnIrzMMWYdV909E0Q3XsR9MDk6nFwZrN1TALlzAw9uc3PUouc6TgK2fH0dKpJ01wkw/exec",
+      { method: "POST", body: data }
+    );
+
+    if (response.ok) {
+      // Redirige a la página de gracias
+      window.location.href = "gracias.html";
+    } else {
+      alert("Hubo un error al enviar el formulario. Intenta nuevamente.");
+    }
+  } catch (error) {
+    alert("No se pudo conectar con el servidor. Revisa tu conexión.");
+    console.error(error);
+  }
+});
+</script>
+
+</body>
+</html>
